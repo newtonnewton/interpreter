@@ -23,28 +23,21 @@ class Parser {
     this.tokens = tokens;
   }
 
-  Expr parse() {
-    try {
-      return expression();
-    } catch (ParseError error) {
-      return null;
-    }
-  }
-
-//> Statements and State parse
-//  List<Stmt> parse() {
-//    List<Stmt> statements = new ArrayList<>();
-//    while (!isAtEnd()) {
-///* Statements and State parse < Statements and State parse-declaration
-//      statements.add(statement());
-//*/
-////> parse-declaration
-//      statements.add(declaration());
-////< parse-declaration
+//  Expr parse() {
+//    try {
+//      return expression();
+//    } catch (ParseError error) {
+//      return null;
 //    }
-//
-//    return statements; // [parse-error-handling]
 //  }
+
+  List<Stmt> parse() {
+    List<Stmt> statements = new ArrayList<>();
+    while (!isAtEnd()) {
+      statements.add(declaration());
+    }
+    return statements; // [parse-error-handling]
+  }
 //< Statements and State parse
 //> expression
   private Expr expression() {
