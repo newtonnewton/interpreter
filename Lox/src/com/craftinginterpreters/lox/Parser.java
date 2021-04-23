@@ -31,11 +31,18 @@ class Parser {
 //    }
 //  }
 
+//> Statements and State parse
   List<Stmt> parse() {
     List<Stmt> statements = new ArrayList<>();
     while (!isAtEnd()) {
+/* Statements and State parse < Statements and State parse-declaration
+      statements.add(statement());
+*/
+//> parse-declaration
       statements.add(declaration());
+//< parse-declaration
     }
+
     return statements; // [parse-error-handling]
   }
 //< Statements and State parse
