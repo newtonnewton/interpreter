@@ -35,15 +35,9 @@ class Parser {
   List<Stmt> parse() {
     List<Stmt> statements = new ArrayList<>();
     while (!isAtEnd()) {
-/* Statements and State parse < Statements and State parse-declaration
-      statements.add(statement());
-*/
-//> parse-declaration
       statements.add(declaration());
-//< parse-declaration
     }
-
-    return statements; // [parse-error-handling]
+    return statements; 
   }
 //< Statements and State parse
 //> expression
