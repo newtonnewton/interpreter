@@ -1,6 +1,46 @@
 package com.craftinginterpreters.lox;
 
-class Interpreter implements Expr.Visitor<Object>{
+//> Functions import-array-list
+import java.util.ArrayList;
+//< Functions import-array-list
+//> Resolving and Binding import-hash-map
+import java.util.HashMap;
+//< Resolving and Binding import-hash-map
+import java.util.List;
+//< Statements and State import-list
+//> Resolving and Binding import-map
+import java.util.Map;
+//< Resolving and Binding import-map
+
+class Interpreter implements Expr.Visitor<Object>,
+                             Stmt.Visitor<Void>{
+	
+@Override
+public Void visitExpressionStmt(Stmt.Expression stmt) {
+  evaluate(stmt.expression);
+  return null;
+}
+
+@Override
+public Void visitPrintStmt(Stmt.Print stmt) {
+  Object value = evaluate(stmt.expression);
+  System.out.println(stringify(value));
+  return null;
+}
+
+void interpret(List<Stmt> statements) {
+    try {
+      for (Stmt statement : statements) {
+        execute(statement);
+      }
+    } catch (RuntimeError error) {
+      Lox.runtimeError(error);
+    }
+}
+
+private void execute(Stmt stmt) {
+    stmt.accept(this);
+}
     
 @Override
 public Object visitLiteralExpr(Expr.Literal expr) {

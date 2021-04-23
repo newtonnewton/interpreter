@@ -52,16 +52,11 @@ public class Lox {
     List<Token> tokens = scanner.scanTokens();
 
     Parser parser = new Parser(tokens);
-    Expr expression = parser.parse();
+    List<Stmt> statements = parser.parse();
 
     // Stop if there was a syntax error.
     if (hadError) return;
-
-<<<<<<< HEAD
-    interpreter.interpret(expression);
-=======
-    System.out.println(new AstPrinter().print(expression));
->>>>>>> branch 'master' of https://github.com/newtonnewton/interpreter.git
+    interpreter.interpret(statements);
   }
 
   static void error(int line, String message) {
@@ -85,13 +80,10 @@ public class Lox {
     }
   }
 //< Parsing Expressions token-error
-<<<<<<< HEAD
 //> Evaluating Expressions runtime-error-method
   static void runtimeError(RuntimeError error) {
     System.err.println(error.getMessage() +
         "\n[line " + error.token.line + "]");
     hadRuntimeError = true;
   }
-=======
->>>>>>> branch 'master' of https://github.com/newtonnewton/interpreter.git
 }
