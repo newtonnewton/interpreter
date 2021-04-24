@@ -285,9 +285,16 @@ public Object visitAssignExpr(Expr.Assign expr) {
 }
 
 @Override
-public Object visitCallExpr(Call expr) {
-	// TODO Auto-generated method stub
-	return null;
+public Object visitCallExpr(Expr.Call expr) {
+  Object callee = evaluate(expr.callee);
+
+  List<Object> arguments = new ArrayList<>();
+  for (Expr argument : expr.arguments) { 
+    arguments.add(evaluate(argument));
+  }
+
+  LoxCallable function = (LoxCallable)callee;
+  return function.call(this, arguments);
 }
 
 @Override
