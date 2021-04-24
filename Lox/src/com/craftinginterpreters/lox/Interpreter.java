@@ -210,9 +210,23 @@ private String stringify(Object object) {
   }
 
 @Override
-public Void visitBlockStmt(Block stmt) {
-	// TODO Auto-generated method stub
-	return null;
+public Void visitBlockStmt(Stmt.Block stmt) {
+  executeBlock(stmt.statements, new Environment(environment));
+  return null;
+}
+
+void executeBlock(List<Stmt> statements,
+        Environment environment) {
+  Environment previous = this.environment;
+  try {
+    this.environment = environment;
+
+    for (Stmt statement : statements) {
+      execute(statement);
+    }
+  } finally {
+    this.environment = previous;
+  }
 }
 
 @Override
