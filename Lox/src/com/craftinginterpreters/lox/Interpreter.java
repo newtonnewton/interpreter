@@ -242,9 +242,13 @@ public Void visitFunctionStmt(Function stmt) {
 }
 
 @Override
-public Void visitIfStmt(If stmt) {
-	// TODO Auto-generated method stub
-	return null;
+public Void visitIfStmt(Stmt.If stmt) {
+  if (isTruthy(evaluate(stmt.condition))) {
+    execute(stmt.thenBranch);
+  } else if (stmt.elseBranch != null) {
+    execute(stmt.elseBranch);
+  }
+  return null;
 }
 
 @Override
@@ -265,10 +269,13 @@ public Void visitVarStmt(Stmt.Var stmt) {
 }
 
 @Override
-public Void visitWhileStmt(While stmt) {
-	// TODO Auto-generated method stub
-	return null;
+public Void visitWhileStmt(Stmt.While stmt) {
+  while (isTruthy(evaluate(stmt.condition))) {
+    execute(stmt.body);
+  }
+  return null;
 }
+
 
 @Override
 public Object visitAssignExpr(Expr.Assign expr) {
@@ -290,9 +297,16 @@ public Object visitGetExpr(Get expr) {
 }
 
 @Override
-public Object visitLogicalExpr(Logical expr) {
-	// TODO Auto-generated method stub
-	return null;
+public Object visitLogicalExpr(Expr.Logical expr) {
+  Object left = evaluate(expr.left);
+
+  if (expr.operator.type == TokenType.OR) {
+    if (isTruthy(left)) return left;
+  } else {
+    if (!isTruthy(left)) return left;
+  }
+
+  return evaluate(expr.right);
 }
 
 @Override
