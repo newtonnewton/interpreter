@@ -280,16 +280,13 @@ class Parser {
     consume(RIGHT_BRACE, "Expect '}' after block.");
     return statements;
   }
-//< Statements and State block
+
 //> Statements and State parse-assignment
   private Expr assignment() {
 /* Statements and State parse-assignment < Control Flow or-in-assignment
     Expr expr = equality();
 */
-//> Control Flow or-in-assignment
     Expr expr = or();
-//< Control Flow or-in-assignment
-
     if (match(EQUAL)) {
       Token equals = previous();
       Expr value = assignment();
