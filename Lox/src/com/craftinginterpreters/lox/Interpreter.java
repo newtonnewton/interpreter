@@ -22,11 +22,7 @@ import com.craftinginterpreters.lox.Expr.This;
 import com.craftinginterpreters.lox.Expr.Variable;
 import com.craftinginterpreters.lox.Stmt.Block;
 import com.craftinginterpreters.lox.Stmt.Class;
-import com.craftinginterpreters.lox.Stmt.Function;
-import com.craftinginterpreters.lox.Stmt.If;
-import com.craftinginterpreters.lox.Stmt.Return;
-import com.craftinginterpreters.lox.Stmt.Var;
-import com.craftinginterpreters.lox.Stmt.While;
+
 
 class Interpreter implements Expr.Visitor<Object>,
                              Stmt.Visitor<Void>{
@@ -270,9 +266,11 @@ public Void visitIfStmt(Stmt.If stmt) {
 }
 
 @Override
-public Void visitReturnStmt(Return stmt) {
-	// TODO Auto-generated method stub
-	return null;
+public Void visitReturnStmt(Stmt.Return stmt) {
+  Object value = null;
+  if (stmt.value != null) value = evaluate(stmt.value);
+
+  throw new Return(value);
 }
 
 @Override
