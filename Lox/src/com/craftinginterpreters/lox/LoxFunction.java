@@ -26,4 +26,9 @@ public Object call(Interpreter interpreter,
   return null;
 }
 
+@Override
+public String toString() {
+  return "<fn " + declaration.name.lexeme + ">";
+}
+
 }

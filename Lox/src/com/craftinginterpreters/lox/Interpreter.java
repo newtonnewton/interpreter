@@ -253,9 +253,10 @@ public Void visitClassStmt(Class stmt) {
 }
 
 @Override
-public Void visitFunctionStmt(Function stmt) {
-	// TODO Auto-generated method stub
-	return null;
+public Void visitFunctionStmt(Stmt.Function stmt) {
+  LoxFunction function = new LoxFunction(stmt);
+  environment.define(stmt.name.lexeme, function);
+  return null;
 }
 
 @Override
